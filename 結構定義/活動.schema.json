@@ -47,6 +47,8 @@
             "id": {"type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"},
             "name": {"type": "string", "minLength": 1},
             "requirement_ids": {"type": "array", "items": {"type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"}, "minItems": 1, "uniqueItems": true},
+            "threshold": {"type": "number", "minimum": 0},
+            "threshold_unit": {"type": "string", "minLength": 1},
             "rewards": {"type": "array", "items": {"type": "string", "minLength": 1}, "minItems": 1},
             "choice_type": {"enum": ["all", "select", "random"]},
             "repeatable": {"type": "boolean"}
