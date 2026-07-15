@@ -1,0 +1,21 @@
+.DS_Store
+Thumbs.db
+
+# Obsidian 個人設定、工作區與快取
+.obsidian/
+.trash/
+
+# 編輯器與暫存檔
+*.swp
+*.tmp
+*~
+
+# 建置與相依套件
+node_modules/
+dist/
+.cache/
+
+# 環境變數與私密設定
+.env
+.env.*
+!.env.example
