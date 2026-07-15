@@ -5,7 +5,7 @@
     {"$ref": "common-content.schema.json"},
     {
       "type": "object",
-      "required": ["type", "starts_at", "ends_at", "source_ids"],
+      "required": ["type", "starts_at", "ends_at", "source_ids", "completion_mode", "completion_requirements", "reward_tiers"],
       "properties": {
         "type": {"const": "event"},
         "starts_at": {"type": "string", "format": "date-time", "pattern": "\\+08:00$"},
@@ -13,8 +13,57 @@
         "claim_deadline": {"type": ["string", "null"], "format": "date-time"},
         "reset": {"enum": ["daily", "weekly", "none", "special"]},
         "participation_scope": {"enum": ["account", "world", "character", "mixed"]},
-        "audiences": {"type": "array", "items": {"type": "string"}, "uniqueItems": true}
-      }
+        "audiences": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+        "completion_mode": {"enum": ["cumulative", "staged", "independent", "mixed"]},
+        "completion_requirements": {
+          "type": "array",
+          "items": {"$ref": "#/allOf/1/$defs/requirement"}
+        },
+        "reward_tiers": {
+          "type": "array",
+          "items": {"$ref": "#/allOf/1/$defs/rewardTier"}
+        }
+      },
+      "$defs": {
+        "requirement": {
+          "type": "object",
+          "required": ["id", "name", "category", "period", "scope", "target", "unit", "required"],
+          "properties": {
+            "id": {"type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"},
+            "name": {"type": "string", "minLength": 1},
+            "category": {"enum": ["login", "quest", "hunt", "boss", "collection", "currency", "other"]},
+            "period": {"enum": ["once", "daily", "weekly", "event"]},
+            "scope": {"enum": ["account", "world", "character"]},
+            "target": {"type": ["number", "null"], "minimum": 0},
+            "unit": {"type": ["string", "null"]},
+            "required": {"type": "boolean"}
+          },
+          "additionalProperties": false
+        },
+        "rewardTier": {
+          "type": "object",
+          "required": ["id", "name", "requirement_ids", "choice_type", "repeatable"],
+          "properties": {
+            "id": {"type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"},
+            "name": {"type": "string", "minLength": 1},
+            "requirement_ids": {"type": "array", "items": {"type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"}, "minItems": 1, "uniqueItems": true},
+            "choice_type": {"enum": ["all", "select", "random"]},
+            "repeatable": {"type": "boolean"}
+          },
+          "additionalProperties": false
+        }
+      },
+      "allOf": [
+        {
+          "if": {"properties": {"status": {"not": {"const": "draft"}}}, "required": ["status"]},
+          "then": {
+            "properties": {
+              "completion_requirements": {"minItems": 1},
+              "reward_tiers": {"minItems": 1}
+            }
+          }
+        }
+      ]
     }
   ]
 }

@@ -107,6 +107,21 @@ for (const { file, data } of pages) {
         warnings.push(`${relative(file)}：claim_deadline 早於 ends_at，請人工確認。`);
       }
     }
+
+    const requirementIds = new Set();
+    for (const requirement of data.completion_requirements ?? []) {
+      if (requirementIds.has(requirement.id)) {
+        errors.push(`${relative(file)}：達成條件 ID「${requirement.id}」重複。`);
+      }
+      requirementIds.add(requirement.id);
+    }
+    for (const rewardTier of data.reward_tiers ?? []) {
+      for (const requirementId of rewardTier.requirement_ids ?? []) {
+        if (!requirementIds.has(requirementId)) {
+          errors.push(`${relative(file)}：獎勵「${rewardTier.id}」引用不存在的達成條件「${requirementId}」。`);
+        }
+      }
+    }
   }
 }
 
