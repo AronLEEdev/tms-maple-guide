@@ -14,6 +14,7 @@ Thumbs.db
 node_modules/
 dist/
 .cache/
+npm-debug.log*
 
 # 環境變數與私密設定
 .env

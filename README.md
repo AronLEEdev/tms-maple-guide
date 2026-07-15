@@ -18,6 +18,7 @@
 
 - [專案設計](PROJECT_DESIGN.md)
 - [推進計畫](推進計畫.md)
+- [Front Matter 欄位規範](欄位規範.md)
 
 ## 內容結構
 
@@ -34,6 +35,15 @@
 ## 貢獻
 
 專案尚處於早期階段。提交內容前請先閱讀 [貢獻指南](CONTRIBUTING.md)。任何重要規則、數值、活動期限或版本差異都必須附上可追溯來源。
+
+## 本機驗證
+
+```bash
+npm install
+npm run validate
+```
+
+驗證器會檢查正式內容的 Front Matter、Schema、穩定 ID、來源引用及活動時間。
 
 ## 授權與聲明
 

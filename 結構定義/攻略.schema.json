@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://tms-maple-guide.local/schemas/guide.schema.json",
+  "allOf": [
+    {"$ref": "common-content.schema.json"},
+    {
+      "type": "object",
+      "required": ["type", "guide_kind", "audiences"],
+      "properties": {
+        "type": {"const": "guide"},
+        "guide_kind": {"enum": ["getting-started", "returning", "leveling", "quest", "progression", "boss", "class", "system"]},
+        "audiences": {"type": "array", "items": {"type": "string"}, "minItems": 1, "uniqueItems": true},
+        "level_min": {"type": ["integer", "null"], "minimum": 1},
+        "level_max": {"type": ["integer", "null"], "minimum": 1},
+        "investment": {"enum": ["free", "low", "medium", "high", "any"]},
+        "prerequisite_ids": {"type": "array", "items": {"type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"}, "uniqueItems": true}
+      }
+    }
+  ]
+}

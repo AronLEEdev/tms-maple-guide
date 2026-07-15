@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://tms-maple-guide.local/schemas/event.schema.json",
+  "allOf": [
+    {"$ref": "common-content.schema.json"},
+    {
+      "type": "object",
+      "required": ["type", "starts_at", "ends_at", "source_ids"],
+      "properties": {
+        "type": {"const": "event"},
+        "starts_at": {"type": "string", "format": "date-time", "pattern": "\\+08:00$"},
+        "ends_at": {"type": "string", "format": "date-time", "pattern": "\\+08:00$"},
+        "claim_deadline": {"type": ["string", "null"], "format": "date-time"},
+        "reset": {"enum": ["daily", "weekly", "none", "special"]},
+        "participation_scope": {"enum": ["account", "world", "character", "mixed"]},
+        "audiences": {"type": "array", "items": {"type": "string"}, "uniqueItems": true}
+      }
+    }
+  ]
+}

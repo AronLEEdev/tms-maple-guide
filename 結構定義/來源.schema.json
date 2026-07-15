@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://tms-maple-guide.local/schemas/source.schema.json",
+  "allOf": [
+    {"$ref": "common-content.schema.json"},
+    {
+      "type": "object",
+      "required": ["type", "publisher", "source_tier", "url", "retrieved_at", "access_status", "supports"],
+      "properties": {
+        "type": {"const": "source"},
+        "publisher": {"type": "string", "minLength": 1},
+        "author": {"type": ["string", "null"]},
+        "source_tier": {"enum": ["official", "community", "other-server"]},
+        "url": {"type": "string", "format": "uri", "pattern": "^https?://"},
+        "published_at": {"type": ["string", "null"], "format": "date"},
+        "source_updated_at": {"type": ["string", "null"], "format": "date"},
+        "retrieved_at": {"type": "string", "format": "date"},
+        "access_status": {"enum": ["available", "changed", "unavailable"]},
+        "archived_url": {"type": ["string", "null"], "format": "uri"},
+        "snapshot_path": {"type": ["string", "null"]},
+        "content_hash": {"type": ["string", "null"]},
+        "supports": {"type": "array", "items": {"type": "string"}, "minItems": 1}
+      }
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://tms-maple-guide.local/schemas/common-content.schema.json",
+  "type": "object",
+  "required": ["id", "title", "type", "server", "status", "created_at", "updated_at", "tags"],
+  "properties": {
+    "id": {"type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"},
+    "title": {"type": "string", "minLength": 1},
+    "type": {"enum": ["event", "guide", "version", "system", "glossary", "source", "test-record"]},
+    "server": {"enum": ["TMS", "KMS", "GMS", "JMS", "CMS", "MSEA", "MULTI"]},
+    "version": {"type": ["string", "null"]},
+    "status": {"enum": ["draft", "needs-verification", "verified", "outdated", "archived"]},
+    "summary": {"type": "string"},
+    "created_at": {"type": "string", "format": "date"},
+    "updated_at": {"type": "string", "format": "date"},
+    "verified_at": {"type": ["string", "null"], "format": "date"},
+    "source_ids": {"type": "array", "items": {"$ref": "#/$defs/id"}, "uniqueItems": true},
+    "related_ids": {"type": "array", "items": {"$ref": "#/$defs/id"}, "uniqueItems": true},
+    "aliases": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+    "tags": {"type": "array", "items": {"type": "string"}, "uniqueItems": true}
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"status": {"const": "verified"}}, "required": ["status"]},
+      "then": {"required": ["verified_at"], "properties": {"verified_at": {"type": "string", "format": "date"}}}
+    }
+  ],
+  "$defs": {
+    "id": {"type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"}
+  }
+}
