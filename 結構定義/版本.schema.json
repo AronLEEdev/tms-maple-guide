@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://tms-maple-guide.local/schemas/version.schema.json",
+  "allOf": [
+    {"$ref": "common-content.schema.json"},
+    {
+      "type": "object",
+      "required": ["type", "version", "released_at", "source_ids"],
+      "properties": {
+        "type": {"const": "version"},
+        "version": {"type": "string", "minLength": 1},
+        "released_at": {"type": "string", "format": "date"}
+      }
+    }
+  ]
+}

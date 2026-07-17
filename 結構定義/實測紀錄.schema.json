@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://tms-maple-guide.local/schemas/test-record.schema.json",
+  "allOf": [
+    {"$ref": "common-content.schema.json"},
+    {
+      "type": "object",
+      "required": ["type", "version", "tested_at", "test_conditions"],
+      "properties": {
+        "type": {"const": "test-record"},
+        "version": {"type": "string", "minLength": 1},
+        "tested_at": {"type": "string", "format": "date"},
+        "test_conditions": {"type": "array", "items": {"type": "string"}, "minItems": 1}
+      }
+    }
+  ]
+}

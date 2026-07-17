@@ -1,0 +1,15 @@
+{
+  "name": "tms-maple-guide",
+  "version": "0.1.0",
+  "private": true,
+  "description": "TMS 楓谷行動指南內容驗證工具",
+  "type": "module",
+  "scripts": {
+    "validate": "node 程式/驗證內容.js"
+  },
+  "devDependencies": {
+    "ajv": "^8.17.1",
+    "ajv-formats": "^3.0.1",
+    "yaml": "^2.8.1"
+  }
+}
